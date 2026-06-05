@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html><body style="font-family:Arial,sans-serif;max-width:640px;margin:0 auto">
+<h2>News Digest — {{ date }}</h2>
+<p>{{ stories|length }} stories · Next run: {{ next_run }}</p>
+
+{% for story in stories %}
+<div style="border:1px solid #e5e7eb;border-radius:8px;padding:20px;margin:16px 0">
+  <span style="background:#e0f2fe;color:#0369a1;padding:2px 8px;border-radius:4px;font-size:12px">
+    {{ story.category }}
+  </span>
+  <h3>{{ story.title }}</h3>
+  <p style="color:#374151">{{ story.summary }}</p>
+  <a href="{{ story.text_url }}">Read Article</a>
+  {% if story.video_url %}
+    · <a href="{{ story.video_url }}">Watch Video</a>
+  {% endif %}
+</div>
+{% endfor %}
+</body></html>

@@ -1,0 +1,40 @@
+# Environment secrets
+.env
+.env.*
+
+# Python virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Python compiled bytecode & cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+
+# Local database files
+agent.db
+*.db
+*.sqlite
+*.sqlite3
+
+# IDE / Editor configurations
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
