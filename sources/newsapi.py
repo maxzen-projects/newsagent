@@ -3,7 +3,13 @@ import httpx, os
 async def fetch(categories=None):
     key = os.getenv("NEWSAPI_KEY")
     articles = []
-    queries = categories or ["technology", "business", "india", "science", "world"]
+    queries = categories or [
+    "Andhra Pradesh",
+    "Telangana",
+    "Hyderabad",
+    "Tollywood",
+    "TSPSC",
+]
 
     async with httpx.AsyncClient() as client:
         for q in queries:

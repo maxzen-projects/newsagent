@@ -3,15 +3,30 @@ from openai import OpenAI
 from .prompts import SYSTEM_PROMPT
 
 def enrich_sync(raw_articles: list) -> list:
+    # If no API key present or user explicitly requests simulation, return a simple
+    # pass-through enriched structure for local testing to avoid external calls.
+    if not os.getenv("OPENAI_API_KEY") or os.getenv("SIMULATE_ENRICH") == "1":
+        enriched = []
+        for a in raw_articles:
+            summary = a.get("description") or a.get("title", "")
+            summary = (summary[:200] + "...") if len(summary) > 200 else summary
+            enriched.append({
+                "title": a.get("title"),
+                "url": a.get("url") or a.get("text_url"),
+                "summary": summary,
+                "category": a.get("category", None),
+            })
+        return enriched
+
     with open("config.yaml") as f:
         cfg = yaml.safe_load(f)["agent"]
 
     client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-    system = SYSTEM_PROMPT.format(
-        n=cfg["top_n"],
-        categories=", ".join(cfg["categories"])
-    )
+    # Avoid using str.format() because SYSTEM_PROMPT contains JSON-like braces.
+    # Use simple replaces for the expected placeholders to prevent KeyError.
+    system = SYSTEM_PROMPT.replace("{n}", str(cfg.get("top_n", "")))
+    system = system.replace("{categories}", ", ".join(cfg.get("categories", [])))
 
     response = client.chat.completions.create(
         model="gpt-4o-mini",

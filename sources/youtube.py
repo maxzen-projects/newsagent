@@ -5,7 +5,7 @@ async def fetch_video(query: str) -> str | None:
     yt = build("youtube", "v3", developerKey=os.getenv("YOUTUBE_API_KEY"))
     resp = yt.search().list(
         q=query, part="snippet", type="video",
-        maxResults=1, order="date"
+        maxResults=5, order="relevance"
     ).execute()
     items = resp.get("items", [])
     if items:

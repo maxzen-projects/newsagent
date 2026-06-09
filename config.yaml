@@ -1,12 +1,31 @@
 agent:
-  active_hour_start: 0       # 12 AM
-  active_hour_end: 18         # 6 PM
+  active_hour_start: 0
+  active_hour_end: 18
   run_interval_hours: 2
   top_n: 10
   summary_words: 60
-  categories: [India, Technology, World, Business, Science]
+
+  categories:
+    - Andhra Pradesh
+    - Telangana
+    - Hyderabad
+    - Jobs/Education
+    - Telugu Movies
+    - Technology
+    - Business
+    - Weather
 
 rss_feeds:
   - http://feeds.bbci.co.uk/news/world/rss.xml
   - https://feeds.reuters.com/reuters/topNews
   - https://timesofindia.indiatimes.com/rssfeedstopstories.cms
+  - https://www.thehindu.com/news/national/andhra-pradesh/feeder/default.rss
+  - https://www.thehindu.com/news/national/telangana/feeder/default.rss
+  - https://www.thehindu.com/news/national/andhra-pradesh/feeder/default.rss
+  - https://www.thehindu.com/news/national/telangana/feeder/default.rss
+  - https://news.google.com/rss/search?q=Andhra+Pradesh
+  - https://news.google.com/rss/search?q=Telangana
+  - https://news.google.com/rss/search?q=Hyderabad
+  - https://newsgoogle.com/rss/search?q=Tollywood
+  - https://news.google.com/rss/search?q=Pawan+Kalyan
+  - https://news.google.com/rss/search?q=Chandrababu+Naidu

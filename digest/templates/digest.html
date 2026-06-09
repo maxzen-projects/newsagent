@@ -11,9 +11,6 @@
   <h3>{{ story.title }}</h3>
   <p style="color:#374151">{{ story.summary }}</p>
   <a href="{{ story.text_url }}">Read Article</a>
-  {% if story.video_url %}
-    · <a href="{{ story.video_url }}">Watch Video</a>
-  {% endif %}
 </div>
 {% endfor %}
 </body></html>
