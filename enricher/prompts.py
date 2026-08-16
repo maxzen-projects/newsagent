@@ -6,12 +6,14 @@ Do NOT change the article URLs. Return the exact `title` and `text_url` fields f
 
 Input will be provided as a JSON array of article objects. Select up to {n} items from that list.
 
+Assign one category per story from: {categories}
+
 Return JSON only, in this exact format (an array of objects):
 [
 	{
 		"title": "",
 		"text_url": "",
-		"category": "Weather | Politics | Tollywood | Jobs/Education | Business | Telangana | Andhra News | General",
+		"category": "str",
 		"summary": ""          # optional short summary (do NOT invent new titles)
 	}
 ]

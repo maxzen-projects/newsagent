@@ -44,6 +44,11 @@ async def filter_duplicates(stories, locked_titles=None):
 
             title = story.get("title", "")
 
+            if title in locked_titles:
+                print("BYPASS LOCKED TITLE:", f"{story.get('score',0):.0f}", title)
+                fresh.append(story)
+                continue
+
             url = story.get("text_url") or story.get("url") or ""
             domain = story_domain(url)
             title_norm = normalize_title(story.get("title", ""))
@@ -69,7 +74,7 @@ async def filter_duplicates(stories, locked_titles=None):
                     """
                     SELECT 1
                     FROM sent_stories
-                    WHERE published_at >= ?
+                    WHERE sent_datetime >= ?
                     AND url = ?
                     """,
                     (

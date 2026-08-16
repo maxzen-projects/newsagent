@@ -147,7 +147,6 @@ UTILITY = {
 NON_LOCAL = {
     "delhi": -50,
     "uttar pradesh": -50,
-    "up": -50,
     "rajasthan": -50,
     "bihar": -50,
     "punjab": -50,
@@ -392,10 +391,6 @@ def score_article(article):
 
     if any(contains_word(title, noise) for noise in POLITICAL_NOISE):
         score -= 200
-
-    for keyword, points in SOURCE_SCORE.items():
-        if keyword in source:
-            score += points
 
     published = article.get("published_at")
 

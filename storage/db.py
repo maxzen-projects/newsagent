@@ -50,6 +50,10 @@ async def init_db():
             await db.execute("ALTER TABLE sent_stories ADD COLUMN domain TEXT")
         if "published_at" not in columns:
             await db.execute("ALTER TABLE sent_stories ADD COLUMN published_at DATETIME")
+        if "sent_datetime" not in columns:
+            await db.execute("ALTER TABLE sent_stories ADD COLUMN sent_datetime DATETIME")
+            if "sent_at" in columns:
+                await db.execute("UPDATE sent_stories SET sent_datetime = sent_at WHERE sent_datetime IS NULL")
 
         await db.commit()
 
@@ -83,10 +87,11 @@ async def mark_sent(entries):
         if isinstance(entry, str):
             url = entry
             title = ""
+            published_at = None
         else:
             url = entry.get("text_url") or entry.get("url") or ""
             title = entry.get("title", "")
-        published_at = entry.get("published_at")
+            published_at = entry.get("published_at")
 
         domain = story_domain(url)
         title_norm = normalize_title(title)

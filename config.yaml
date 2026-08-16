@@ -21,11 +21,9 @@ rss_feeds:
   - https://timesofindia.indiatimes.com/rssfeedstopstories.cms
   - https://www.thehindu.com/news/national/andhra-pradesh/feeder/default.rss
   - https://www.thehindu.com/news/national/telangana/feeder/default.rss
-  - https://www.thehindu.com/news/national/andhra-pradesh/feeder/default.rss
-  - https://www.thehindu.com/news/national/telangana/feeder/default.rss
   - https://news.google.com/rss/search?q=Andhra+Pradesh
   - https://news.google.com/rss/search?q=Telangana
   - https://news.google.com/rss/search?q=Hyderabad
-  - https://newsgoogle.com/rss/search?q=Tollywood
+  - https://news.google.com/rss/search?q=Tollywood
   - https://news.google.com/rss/search?q=Pawan+Kalyan
   - https://news.google.com/rss/search?q=Chandrababu+Naidu

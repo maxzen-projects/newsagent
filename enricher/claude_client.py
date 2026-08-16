@@ -12,7 +12,7 @@ def enrich_sync(raw_articles: list) -> list:
             summary = (summary[:200] + "...") if len(summary) > 200 else summary
             enriched.append({
                 "title": a.get("title"),
-                "url": a.get("url") or a.get("text_url"),
+                "text_url": a.get("text_url") or a.get("url"),
                 "summary": summary,
                 "category": a.get("category", None),
             })

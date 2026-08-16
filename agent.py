@@ -1,4 +1,5 @@
 import asyncio
+import datetime
 import json
 import re
 from difflib import SequenceMatcher
@@ -181,12 +182,8 @@ def is_cricket_article(article):
 load_dotenv()
 
 def is_active_window():
-    return True
-
-# Production:
-# import datetime
-# h = datetime.datetime.now().hour
-# return 0 <= h < 18
+    h = datetime.datetime.now().hour
+    return 0 <= h < 18   # 12 AM – 6 PM
 
 
 async def run_agent():
@@ -592,39 +589,6 @@ async def run_agent():
         f"After DB duplicate filter: {len(raw)} articles"
     )
 
-    # --- Cluster similar event/entity stories (keep highest per cluster) ---
-    CLUSTERS = {
-        "spirit": ["spirit", "vimal theatre", "vimaltheatre", "sandeep reddy vanga"],
-        "peddi": ["peddi", "ram charan"],
-        "vaibhav": ["vaibhav", "suryavanshi", "sooryavanshi"],
-    }
-
-    kept_clusters = {}
-    clustered = []
-
-    for article in sorted(raw, key=lambda x: x.get("score", 0), reverse=True):
-        title = article.get("title", "").lower()
-        matched = False
-        for cluster_name, keywords in CLUSTERS.items():
-            if any(text_contains(title, k) for k in keywords):
-                matched = True
-                if cluster_name not in kept_clusters:
-                    kept_clusters[cluster_name] = article
-                    clustered.append(article)
-                else:
-                    # Only treat as a cluster duplicate if the titles are highly similar
-                    kept = kept_clusters[cluster_name]
-                    sim = token_set_ratio(normalize_title(kept.get("title", "")), normalize_title(article.get("title", "")))
-                    if sim >= 85:
-                        print("REMOVED CLUSTER DUP:", f"{article.get('score',0):.0f}", cluster_name, title)
-                    else:
-                        # different angle, keep it as separate
-                        clustered.append(article)
-                break
-
-        if not matched:
-            clustered.append(article)
-
     candidates = sorted(raw, key=lambda x: x.get("score", 0), reverse=True)[:15]
 
     print("\nFINAL TOP STORIES")
@@ -640,8 +604,9 @@ async def run_agent():
     print(f"Claude returned {len(enriched)} stories")
 
     if not enriched:
-        print("Claude returned empty, using candidate list instead")
-        enriched = []
+        await log_run(len(raw), 0, "SKIPPED", "Claude returned empty")
+        print("Claude returned empty — skipping send")
+        return
 
     enriched_map = {}
     for story in enriched:
